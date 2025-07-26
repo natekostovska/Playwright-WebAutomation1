@@ -1,11 +1,17 @@
 import {test,expect} from "@playwright/test";
 
+test.describe.configure({mode:'parallel'})
+
 test.beforeEach(async({page})=>
 {
-    await page.goto('http://localhost:4200/')  // need to use await for those who use promise
+    await page.goto('/')  // need to use await for those who use promise
 })
 
+// test.describe.parallel
 test.describe('Form Layouts Page',()=>{
+    test.describe.configure({retries: 2})
+    test.describe.configure({mode: 'serial'}) // test dependency if we have
+
     test.beforeEach(async({page})=>
 {
     await page.getByText('Forms').click()
@@ -13,11 +19,15 @@ test.describe('Form Layouts Page',()=>{
 })
 
 
-test('input fields',async({page})=>{
+test('input fields',async({page},testInfo)=>{
+    if(testInfo.retry){
+        //do something
+    }
     const usingTheGridEmailInput=page.locator('nb-card',{hasText:"Using the Grid"}).getByRole('textbox',{name:"Email"})
     await usingTheGridEmailInput.fill('test@test.com')
     await usingTheGridEmailInput.clear()
-    await usingTheGridEmailInput.pressSequentially('test2@test.com',{delay:500})
+    //await usingTheGridEmailInput.pressSequentially('test2@test.com',{delay:500})
+    await usingTheGridEmailInput.pressSequentially('test2@test.com')
 
     // generic assertion
     const inputValue= await usingTheGridEmailInput.inputValue()

@@ -39,11 +39,12 @@ test('delete article',async({page, request})=>{
           "article":{"title":"Title Nate1","description":"Description Nate1","body":"Body Nate 1","tagList":[]}
         }
     })
-    expect(articleResponse.status()).toEqual(201)
+    await expect(articleResponse.status()).toEqual(201)
 
     await page.getByText('Global Feed').click()
     await page.getByText('Title Nate1').click()
     await page.getByRole('button',{name: "Delete Article"}).first().click()
+
 
  await expect(page.locator('app-article-list h1').first()).not.toContainText('Title Nate1')
 })

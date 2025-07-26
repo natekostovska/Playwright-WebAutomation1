@@ -6,7 +6,7 @@ import {test,expect} from "@playwright/test";
 
 test.beforeEach(async({page})=>
 {
-    await page.goto('http://localhost:4200/')  // need to use await for those who use promise
+    await page.goto('/')  // need to use await for those who use promise
     await page.getByText('Forms').click()
     await page.getByText('Form Layouts').click()
 })
