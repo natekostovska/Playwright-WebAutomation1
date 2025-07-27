@@ -10,7 +10,7 @@ test.beforeEach(async({page})=>
     await page.goto('/')
 })
 
-test('navigate to form page',async({page})=>{
+test('navigate to form page @smoke @regression',async({page})=>{
     const pm=new PageManager(page)
    // const navigateTo=new NavigationPage(page)
     // await navigateTo.formLayoutsPage()
@@ -25,7 +25,7 @@ test('navigate to form page',async({page})=>{
     await pm.navigateTo().tooltipPage()
 })
 
-test('parametrized methods',async({page})=>{
+test('parametrized methods @smoke',async({page})=>{
     const pm=new PageManager(page)
     // const navigateTo=new NavigationPage(page)
     // const onFormLayoutsPage=new FormLayoutsPage(page)

@@ -1,0 +1,4 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","4273","navigate to form page @smoke @regression","chromium","Mon Jul 28 00:36:53 CEST 2025","passed","Mon Jul 28 00:36:57 CEST 2025","","tests\usePageObjects.spec.ts","",""
+"","3501","parametrized methods @smoke","chromium","Mon Jul 28 00:36:57 CEST 2025","passed","Mon Jul 28 00:37:01 CEST 2025","","tests\usePageObjects.spec.ts","",""
+"","515","authentication","setup","Mon Jul 28 00:36:51 CEST 2025","passed","Mon Jul 28 00:36:52 CEST 2025","","tests\auth.setup.ts","",""

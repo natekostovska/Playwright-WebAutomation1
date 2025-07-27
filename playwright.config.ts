@@ -10,13 +10,20 @@ expect:{
 timeout:2000
 },
   retries: 1,
-  reporter: 'html',
+ // reporter: 'html',
+ //reporter:'list',
+ reporter:[
+  ['json',{outputFile: 'test-results/jsonReport.json'}],
+  ['junit',{outputFile: 'test-results/junitReport.xml'}],
+  ['allure-playwright']
+
+],
   use: {
    globalsQaURL:'https://www.globalsqa.com/demo-site/draganddrop/',
-   baseURL:'http://localhost:4200/',
-// baseURL: process.env.DEV =='1'? 'http://localhost:4201/'
-//   : process.env.STAGING=='1'?'http://localhost:4202/'
-//   : 'http://localhost:4200/',
+ //  baseURL:'http://localhost:4200/',
+ baseURL: process.env.DEV =='1'? 'http://localhost:4201/'
+  : process.env.STAGING=='1'?'http://localhost:4202/'
+  : 'http://localhost:4200/',
 
     trace: 'on-first-retry',
    // actionTimeout:20000,
@@ -29,6 +36,8 @@ timeout:2000
       size: {width:1920, height:1080}
     }
   },
+  globalSetup: require.resolve('./global-setup.ts'),
+  globalTeardown: require.resolve('./global-teardown.ts'),
   projects: [
     //  {
     //   name: 'dev',
@@ -58,40 +67,56 @@ timeout:2000
 
       {
       name: 'regression',
+      testIgnore:['likesCounter.spec.ts','auth.setup.ts','workingWithAPI.spec.ts','likesCounterGlobal.spec.ts'],
       use: { ...devices['Desktop Chrome'],storageState: '.auth/user.json' },
       dependencies:['setup'],
     },
-
-        {
+    
+      {
+      name: 'chromium',
+      testIgnore:['likesCounter.spec.ts','auth.setup.ts','workingWithAPI.spec.ts','likesCounterGlobal.spec.ts'],
+      use: { ...devices['Desktop Chrome'],storageState: '.auth/user.json' },
+      dependencies:['setup'],
+    },
+     {
       name: 'likeCounter',
       testMatch:'likesCounter.spec.ts',
       use: { ...devices['Desktop Chrome'],storageState: '.auth/user.json' },
       dependencies:['articleSetup'],
     },
-      {
-      name: 'chromium',
+
+     {
+      name: 'likeCounterGlobal',
+      testMatch:'likesCounterGlobal.spec.ts',
       use: { ...devices['Desktop Chrome'],storageState: '.auth/user.json' },
-      dependencies:['setup'],
     },
 
-    // {
-    //   name: 'firefox',
-    //   use: { browserName:'firefox', storageState: '.auth/user.json' , 
-    //   video:{
-    //   mode:'on',
-    //   size: {width:1920, height:1080}
-    // }},
-    //   dependencies:['setup']
-    // },
+     {
+       name: 'firefox',
+     use: { browserName:'firefox', storageState: '.auth/user.json' , 
+     video:{
+       mode:'on',
+       size: {width:1920, height:1080}
+     }},
+       dependencies:['setup']
+     },
 
-    // {
-    //   name: 'pageObjectFullScreen',
-    //   testMatch:'usePageObjects.spec.ts',
-    //   use:{
-    //     viewport:{width:1920, height:1080}
-    //   }
+     {
+       name: 'pageObjectFullScreen',
+       testMatch:'usePageObjects.spec.ts',
+       use:{
+         viewport:{width:1920, height:1080}
+       }
+   },
 
-    // }
+   {
+    name:'mobile',
+    testIgnore:['likesCounter.spec.ts','workingWithAPI.spec.ts','likesCounterGlobal.spec.ts'],
+    testMatch:'testMobile.spec.ts',
+    use:{
+      ...devices['iPhone 13 Pro'],
+    }
+   }
   ],
 
 });

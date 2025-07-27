@@ -8,7 +8,7 @@ test.beforeEach(async({page})=>
 })
 
 // test.describe.parallel
-test.describe('Form Layouts Page',()=>{
+test.describe('Form Layouts Page @block',()=>{
     test.describe.configure({retries: 2})
     test.describe.configure({mode: 'serial'}) // test dependency if we have
 
