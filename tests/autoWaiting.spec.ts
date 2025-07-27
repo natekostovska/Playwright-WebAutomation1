@@ -9,7 +9,7 @@ test.beforeEach(async({page},testInfo)=>
 
 test('auto waiting', async({page})=>{
     const successButton=page.locator('.bg-success')
- //   await successButton.click()
+   // await successButton.click()
 
  //   const text = await successButton.textContent()
 

@@ -1,6 +1,5 @@
-import {test,expect} from "@playwright/test";
+import {test,expect, request} from "@playwright/test";
 import tags from '../test-data/tags.json'
-import { request } from "http";
 
 test.beforeEach(async({page})=>
 {
@@ -11,7 +10,7 @@ await route.fulfill({
 })
     })
 
-    await page.goto('https://conduit.bondaracademy.com/',{waitUntil:'networkidle'})
+    await page.goto('https://conduit.bondaracademy.com/')
 })
 
 test('has title',async({page})=>{
@@ -39,8 +38,8 @@ test('delete article',async({page, request})=>{
           "article":{"title":"Title Nate1","description":"Description Nate1","body":"Body Nate 1","tagList":[]}
         }
     })
-    await expect(articleResponse.status()).toEqual(201)
 
+    await expect(articleResponse.status()).toEqual(201)
     await page.getByText('Global Feed').click()
     await page.getByText('Title Nate1').click()
     await page.getByRole('button',{name: "Delete Article"}).first().click()
