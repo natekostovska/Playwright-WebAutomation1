@@ -21,5 +21,11 @@
     ],
     "resolveJsonModule": true,
     "esModuleInterop": true, // also recommended
+    "baseUrl": ".",
+    "paths": {
+      "@applitools/eyes-playwright/fixture": [
+        "node_modules/@applitools/eyes-playwright/types/fixture"
+      ]
+    }
   }
 }

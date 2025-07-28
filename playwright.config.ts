@@ -1,30 +1,51 @@
+import { EyesFixture } from '@applitools/eyes-playwright/fixture';
 import { defineConfig, devices } from '@playwright/test';
 import type { TestOptions } from './test-options';
 
 require('dotenv').config();
 
-export default defineConfig<TestOptions>({
+export default defineConfig<TestOptions,EyesFixture>({
  timeout: 40000,
   globalTimeout: 60000,
 expect:{
-timeout:2000
+timeout:2000,
+toMatchSnapshot:{maxDiffPixels:50}
 },
   retries: 1,
- // reporter: 'html',
+ // reporter: '@applitools/eyes-playwright/reporter',
  //reporter:'list',
  reporter:[
   ['json',{outputFile: 'test-results/jsonReport.json'}],
   ['junit',{outputFile: 'test-results/junitReport.xml'}],
-  ['allure-playwright']
+ // ['allure-playwright']
+ ['html']
 
 ],
   use: {
+    /* Configuration for Eyes VisualAI */
+    eyesConfig: {
+      /* The following and other configuration parameters are documented at: https://applitools.com/tutorials/playwright/api/overview */
+      apiKey: 'xKuWX3Fu105PNz431w2iJ5DTALo1074ErIS98l9c8OnwXWjY110', // alternatively, set this via environment variable APPLITOOLS_API_KEY
+ type: 'ufg',
+browsersInfo: [
+  { name: 'chrome', width: 800, height: 600 },
+  { name: 'firefox', width: 1024, height: 768 },
+  {
+    name: 'safari',
+    width: 375,
+    height: 667,
+   // deviceScaleFactor: 2,
+   // isMobile: true
+  },
+],
+    },
+
    globalsQaURL:'https://www.globalsqa.com/demo-site/draganddrop/',
  //  baseURL:'http://localhost:4200/',
  baseURL: process.env.DEV =='1'? 'http://localhost:4201/'
   : process.env.STAGING=='1'?'http://localhost:4202/'
   : 'http://localhost:4200/',
-
+    viewport:{height:720,width:1280},
     trace: 'on-first-retry',
    // actionTimeout:20000,
     navigationTimeout:5000,
@@ -67,16 +88,13 @@ timeout:2000
 
       {
       name: 'regression',
-      testIgnore:['likesCounter.spec.ts','auth.setup.ts','workingWithAPI.spec.ts','likesCounterGlobal.spec.ts'],
       use: { ...devices['Desktop Chrome'],storageState: '.auth/user.json' },
       dependencies:['setup'],
     },
     
       {
       name: 'chromium',
-      testIgnore:['likesCounter.spec.ts','auth.setup.ts','workingWithAPI.spec.ts','likesCounterGlobal.spec.ts'],
-      use: { ...devices['Desktop Chrome'],storageState: '.auth/user.json' },
-      dependencies:['setup'],
+      use: { ...devices['Desktop Chrome']}
     },
      {
       name: 'likeCounter',

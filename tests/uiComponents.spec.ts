@@ -9,7 +9,7 @@ test.beforeEach(async({page})=>
 
 // test.describe.parallel
 test.describe('Form Layouts Page @block',()=>{
-    test.describe.configure({retries: 2})
+    test.describe.configure({retries: 0})
     test.describe.configure({mode: 'serial'}) // test dependency if we have
 
     test.beforeEach(async({page})=>
@@ -41,15 +41,25 @@ test('radio buttons',async({page})=>{
     const usingTheGridForm=page.locator('nb-card',{hasText:"Using the Grid"})
     // visually hidden radio buttons
 
-  //  await usingTheGridForm.getByLabel('Option 1').check({force:true})
-    await usingTheGridForm.getByRole('radio',{name:"Option 1"}).check({force:true})
+    await usingTheGridForm.getByLabel('Option 1').check({force:true})
+    await usingTheGridForm.getByRole('radio',{name:"Option 2"}).check({force:true})
     const radioStatus = await usingTheGridForm.getByRole('radio',{name:"Option 1"}).isChecked()
-    expect(radioStatus).toBeTruthy()
-    await expect(usingTheGridForm.getByRole('radio',{name:"Option 1"})).toBeChecked()
+    await expect(usingTheGridForm).toHaveScreenshot({maxDiffPixels:250})
 
-      await usingTheGridForm.getByRole('radio',{name:"Option 2"}).check({force:true})
-      expect( await usingTheGridForm.getByRole('radio',{name:"Option 1"}).isChecked()).toBeFalsy()
-      expect( await usingTheGridForm.getByRole('radio',{name:"Option 2"}).isChecked()).toBeTruthy()
+     expect(radioStatus).toBeTruthy()
+     await expect(usingTheGridForm.getByRole('radio',{name:"Option 1"})).toBeChecked()
+
+       await usingTheGridForm.getByRole('radio',{name:"Option 2"}).check({force:true})
+       expect( await usingTheGridForm.getByRole('radio',{name:"Option 1"}).isChecked()).toBeFalsy()
+       expect( await usingTheGridForm.getByRole('radio',{name:"Option 2"}).isChecked()).toBeTruthy()
+
+})
+
+test('radio buttons2',async({page})=>{
+    const usingTheGridForm=page.locator('nb-card',{hasText:"Using the Grid"})
+    await usingTheGridForm.getByRole('radio',{name:"Option 2"}).check({force:true})
+    const radioStatus = await usingTheGridForm.getByRole('radio',{name:"Option 1"}).isChecked()
+    await expect(usingTheGridForm).toHaveScreenshot({maxDiffPixels:250})
 
 })
 
