@@ -6,7 +6,7 @@ require('dotenv').config();
 
 export default defineConfig<TestOptions,EyesFixture>({
  timeout: 40000,
-  globalTimeout: 60000,
+ // globalTimeout: 60000,
 expect:{
 timeout:2000,
 toMatchSnapshot:{maxDiffPixels:50}
@@ -25,7 +25,7 @@ toMatchSnapshot:{maxDiffPixels:50}
     /* Configuration for Eyes VisualAI */
     eyesConfig: {
       /* The following and other configuration parameters are documented at: https://applitools.com/tutorials/playwright/api/overview */
-      apiKey: 'xKuWX3Fu105PNz431w2iJ5DTALo1074ErIS98l9c8OnwXWjY110', // alternatively, set this via environment variable APPLITOOLS_API_KEY
+      apiKey: process.env.API_KEY, // alternatively, set this via environment variable APPLITOOLS_API_KEY
  type: 'ufg',
 browsersInfo: [
   { name: 'chrome', width: 800, height: 600 },
@@ -136,5 +136,10 @@ browsersInfo: [
     }
    }
   ],
+
+  webServer:{
+    command:'npm run start',
+    url:'http://localhost:4200/'
+  }
 
 });
