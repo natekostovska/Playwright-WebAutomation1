@@ -94,7 +94,7 @@ browsersInfo: [
     
       {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome']}
+      use: { ...devices['Desktop Chrome'],storageState: '.auth/user.json'}
     },
      {
       name: 'likeCounter',
