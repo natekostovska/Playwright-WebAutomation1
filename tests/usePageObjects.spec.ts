@@ -3,7 +3,7 @@ import { PageManager } from "../page-objects/pageManager";
 // import {NavigationPage} from '../page-objects/navigationPage'
 // import { FormLayoutsPage } from "../page-objects/formLayoutsPge";
 // import { DatePickerPage } from "../page-objects/datepickerPage";
-import {faker} from '@faker-js/faker'
+import {faker} from '@faker-js/faker';
 
 test.beforeEach(async({page})=>
 {
