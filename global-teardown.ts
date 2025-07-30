@@ -1,3 +1,11 @@
+import { request } from "@playwright/test";
+import fs from 'fs';
+import path from 'path';
+
+const authDir = path.resolve(__dirname, '.auth');
+const authFile = path.join(authDir, 'user.json');
+const slugFile = path.join(authDir, 'slug.json');
+
 async function globalTeardown() {
   const context = await request.newContext();
 
@@ -13,11 +21,14 @@ async function globalTeardown() {
     const slugData = JSON.parse(fs.readFileSync(slugFile, 'utf-8'));
     const slugId = slugData.slugId;
 
-    const deleteArticleResponse = await context.delete(`https://conduit-api.bondaracademy.com/api/articles/${slugId}`, {
-      headers: {
-        Authorization: `Token ${accessToken}`
+    const deleteArticleResponse = await context.delete(
+      `https://conduit-api.bondaracademy.com/api/articles/${slugId}`,
+      {
+        headers: {
+          Authorization: `Token ${accessToken}`
+        }
       }
-    });
+    );
 
     if (deleteArticleResponse.status() !== 204) {
       console.warn(`Article deletion returned status ${deleteArticleResponse.status()}`);
@@ -30,3 +41,5 @@ async function globalTeardown() {
     await context.dispose();
   }
 }
+
+export default globalTeardown;

@@ -22,15 +22,17 @@ async function globalSetup() {
     const responseBody = await responseToken.json();
     const accessToken = responseBody.user.token;
 
-    // Prepare user JSON structure (or load a template if needed)
+    // Add origin to satisfy Playwright storage state format
     const user = {
         origins: [
             {
+                origin: 'https://conduit.bondaracademy.com',
                 localStorage: [
                     { name: "accessToken", value: accessToken }
                 ]
             }
-        ]
+        ],
+        cookies: []
     };
 
     fs.writeFileSync(authFile, JSON.stringify(user, null, 2));
