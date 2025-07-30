@@ -15,6 +15,16 @@ toMatchSnapshot:{maxDiffPixels:50}
  // reporter: '@applitools/eyes-playwright/reporter',
  //reporter:'list',
  reporter:[
+      // Use "dot" reporter on CI, "list" otherwise (Playwright default).
+    process.env.CI ? ["dot"] : ["list"],
+      // Add Argos reporter.
+    [
+      "@argos-ci/playwright/reporter",
+      {
+        // Upload to Argos on CI only.
+        uploadToArgos: !!process.env.CI,
+      },
+    ],  
   ['json',{outputFile: 'test-results/jsonReport.json'}],
   ['junit',{outputFile: 'test-results/junitReport.xml'}],
  // ['allure-playwright']
@@ -47,6 +57,7 @@ browsersInfo: [
   : 'http://localhost:4200/',
     viewport:{height:720,width:1280},
     trace: 'on-first-retry',
+     screenshot: "only-on-failure",
    // actionTimeout:20000,
     navigationTimeout:5000,
     extraHTTPHeaders:{

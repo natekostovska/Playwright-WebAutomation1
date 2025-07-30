@@ -1,8 +1,8 @@
 {
   "overrides": {
-  "d3-array": "2.12.1",
-  "@babel/runtime": "^7.24.7"
-},
+    "d3-array": "2.12.1",
+    "@babel/runtime": "^7.24.7"
+  },
   "name": "ngx-admin",
   "version": "10.0.0",
   "license": "MIT",
@@ -70,6 +70,7 @@
     "@angular/compiler-cli": "^14.2.12",
     "@angular/language-service": "14.2.12",
     "@applitools/eyes-playwright": "^1.38.0",
+    "@argos-ci/playwright": "^5.0.8",
     "@babel/core": "^7.28.0",
     "@babel/plugin-transform-runtime": "7.24.7",
     "@babel/preset-env": "^7.28.0",
