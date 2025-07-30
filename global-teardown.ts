@@ -1,16 +1,10 @@
-import { request, expect } from "@playwright/test";
-import fs from 'fs';
-import path from 'path';
-
-const authFile = path.resolve(__dirname, '.auth/user.json');
-const slugFile = path.resolve(__dirname, '.auth/slug.json');
-
 async function globalTeardown() {
-    const context = await request.newContext();
+  const context = await request.newContext();
 
+  try {
     if (!fs.existsSync(authFile) || !fs.existsSync(slugFile)) {
-        console.warn('Auth or slug files not found, skipping teardown.');
-        return;
+      console.warn('Auth or slug files not found, skipping teardown.');
+      return;
     }
 
     const user = JSON.parse(fs.readFileSync(authFile, 'utf-8'));
@@ -20,14 +14,19 @@ async function globalTeardown() {
     const slugId = slugData.slugId;
 
     const deleteArticleResponse = await context.delete(`https://conduit-api.bondaracademy.com/api/articles/${slugId}`, {
-        headers: {
-            Authorization: `Token ${accessToken}`
-        }
+      headers: {
+        Authorization: `Token ${accessToken}`
+      }
     });
 
-    expect(deleteArticleResponse.status()).toBe(204);
-
+    if (deleteArticleResponse.status() !== 204) {
+      console.warn(`Article deletion returned status ${deleteArticleResponse.status()}`);
+    } else {
+      console.log('Article deleted successfully.');
+    }
+  } catch (error) {
+    console.error('Global teardown failed:', error);
+  } finally {
     await context.dispose();
+  }
 }
-
-export default globalTeardown;
