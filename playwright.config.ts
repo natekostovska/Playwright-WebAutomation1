@@ -4,7 +4,7 @@ import type { TestOptions } from './test-options';
 
 require('dotenv').config();
 
-export default defineConfig<TestOptions,EyesFixture>({
+export default defineConfig<>({
  timeout: 40000,
  // globalTimeout: 60000,
 expect:{
@@ -139,7 +139,7 @@ browsersInfo: [
 
   webServer:{
     command:'npm run start:ci',
-    url:'http://localhost:4200/'
+    url:'http://localhost:4200/',
      timeout: 120 * 1000, // 2 minutes
   reuseExistingServer: !process.env.CI
   }
