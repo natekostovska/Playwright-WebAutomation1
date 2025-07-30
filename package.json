@@ -13,6 +13,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:ci": "ng serve --configuration=production --port=4200 --disable-host-check",
     "pageObjects-chrome": "npx playwright test usePageObjects.spec.ts --project=chromium",
     "pageObjects-firefox": "npx playwright test usePageObjects.spec.ts --project=firefox",
     "pageObjects-all": "npm run pageObjects-chrome && npm run pageObjects-firefox",

@@ -138,8 +138,10 @@ browsersInfo: [
   ],
 
   webServer:{
-    command:'npm run start',
+    command:'npm run start:ci',
     url:'http://localhost:4200/'
+     timeout: 120 * 1000, // 2 minutes
+  reuseExistingServer: !process.env.CI
   }
 
 });
