@@ -4,7 +4,7 @@ import type { TestOptions } from './test-options';
 
 require('dotenv').config();
 
-export default defineConfig<>({
+export default defineConfig<TestOptions,EyesFixture>({
  timeout: 40000,
  // globalTimeout: 60000,
 expect:{
